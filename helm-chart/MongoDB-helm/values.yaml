@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: mongo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+mongodbUsername: admin
+mongodbPassword: adminpassword
+mongodbDatabase: mydatabase
+
+service:
+  name: mongodb-service
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+configmap:
+  name: mongodb-configmap
+  databaseUrl: mongodb-service
+
+secrets:
+  name: mongodb-secret
+  username: admin
+  password: adminpassword

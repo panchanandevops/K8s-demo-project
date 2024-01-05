@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: mongo-express
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: mongo-express-service
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+
+ingress:
+  enabled: true
+  host: app.com
+  path: /
+  ingressClassName: nginx
+  name: mongoexpress-ingress
