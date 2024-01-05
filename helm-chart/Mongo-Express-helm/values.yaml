@@ -15,7 +15,7 @@ service:
 
 ingress:
   enabled: true
-  host: app.com
+  host: devops.com
   path: /
   ingressClassName: nginx
   name: mongoexpress-ingress
