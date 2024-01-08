@@ -1,4 +1,4 @@
-# My Kubernetes Project 🚀
+# My Kubernetes Demo Project 🚀
 
 Welcome to the documentation for My Kubernetes Project. This project deploys MongoDB and Mongo Express on Kubernetes using various deployment methods.
 
@@ -42,12 +42,45 @@ Before you begin, ensure you have the following tools installed:
 For detailed usage instructions and additional information, refer to the README files in the respective directories:
 
 ### Helm Charts 📈
+To deploy the Helm charts in the **prod namespace**, execute the following commands:
+
+1. Install MongoDB Helm chart:
+
+```bash
+helm install mongo-release helm-chart/MongoDB-helm --namespace prod
+```
+
+2. Install Mongo Express Helm chart:
+
+```bash
+helm install mongo-express-release helm-chart/Mongo-Express-helm --namespace prod
+```
+
 
 Navigate to the [Helm Chart README](helm-chart/README.md) in the `helm-chart` directory for comprehensive guidance on deploying MongoDB and Mongo Express using Helm charts.
 
-### Kustomize 🛠️
+### Kustomization 🛠️
 
+Deploy MongoDB and Mongo Express using kustomization:
+
+```bash
+kubectl apply -k kustomize/overlays/production
+```
 Explore the [Kustomize README](kustomize/README.md) in the `kustomize` directory for details on customization and deployment using Kustomize.
+
+### Plain YML Code
+
+Deploy MongoDB and Mongo Express using plain YAML code:
+
+**Ensure proper order by applying ConfigMap and Secret first, followed by the remaining files for deploying MongoDB and Mongo Express using plain YAML code**
+
+```bash
+kubectl apply -f k8s-yaml/mongo-configmap.yaml
+kubectl apply -f k8s-yaml/mongo-secret.yaml
+kubectl apply -f k8s-yaml/mongo.yaml
+kubectl apply -f k8s-yaml/mongo-express.yaml
+kubectl apply -f k8s-yaml/ingress.yaml
+```
 
 Make sure to check these directories for more comprehensive guidance on deploying and customizing MongoDB and Mongo Express using Helm charts and Kustomize.
 
