@@ -1,26 +1,26 @@
-replicaCount: 1
+replicaCount: 1 # Number of replica pods to maintain
 
 image:
-  repository: mongo
-  tag: latest
-  pullPolicy: IfNotPresent
+  repository: mongo # Docker image repository
+  tag: latest # Docker image tag
+  pullPolicy: IfNotPresent # Image pull policy
 
-mongodbUsername: admin
-mongodbPassword: adminpassword
-mongodbDatabase: mydatabase
+mongodbUsername: admin # MongoDB admin username
+mongodbPassword: adminpassword # MongoDB admin password
+mongodbDatabase: mydatabase # MongoDB database name
 
 service:
-  name: mongodb-service
+  name: mongodb-service # Name of the MongoDB service
   ports:
     - protocol: TCP
-      port: 27017
-      targetPort: 27017
+      port: 27017 # Port to expose on the service
+      targetPort: 27017 # Port to forward traffic to on the pods
 
 configmap:
-  name: mongodb-configmap
-  databaseUrl: mongodb-service
+  name: mongodb-configmap # Name of the ConfigMap
+  databaseUrl: mongodb-service # URL of the MongoDB service in the ConfigMap
 
 secrets:
-  name: mongodb-secret
-  username: admin
-  password: adminpassword
+  name: mongodb-secret # Name of the Secret
+  username: admin # Secret key for the username in the Secret
+  password: adminpassword # Secret key for the password in the Secret

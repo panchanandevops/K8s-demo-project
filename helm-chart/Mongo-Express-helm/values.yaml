@@ -1,21 +1,21 @@
-replicaCount: 1
+replicaCount: 1 # Number of replica pods to maintain
 
 image:
-  repository: mongo-express
-  tag: latest
-  pullPolicy: IfNotPresent
+  repository: mongo-express # Container image repository
+  tag: latest # Container image tag
+  pullPolicy: IfNotPresent # Image pull policy
 
 service:
-  name: mongo-express-service
-  type: LoadBalancer
+  name: mongo-express-service # Name of the Service
+  type: LoadBalancer # Type of the Service (LoadBalancer, ClusterIP, etc.)
   ports:
     - protocol: TCP
-      port: 8081
-      targetPort: 8081
+      port: 8081 # Port exposed by the Service
+      targetPort: 8081 # Target port on pods
 
 ingress:
-  enabled: true
-  host: devops.com
-  path: /
-  ingressClassName: nginx
-  name: mongoexpress-ingress
+  enabled: true # Enable/disable Ingress
+  host: devops.com # Hostname associated with the Ingress
+  path: / # Path to match in the Ingress
+  ingressClassName: nginx # Ingress class to use
+  name: mongoexpress-ingress # Name of the Ingress

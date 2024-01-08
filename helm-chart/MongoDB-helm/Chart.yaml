@@ -1,4 +1,4 @@
 apiVersion: v2
-name: mongodb
-description: A Helm chart for MongoDB
-version: 0.1.0
+name: mongodb # Name of the Helm Chart
+description: A Helm chart for MongoDB # Description of the Helm Chart
+version: 0.1.0 # Version of the Helm Chart

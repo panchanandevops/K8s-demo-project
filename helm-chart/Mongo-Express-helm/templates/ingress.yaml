@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.name }}
+  name: {{ .Values.ingress.name }}                     # Unique identifier for the Helm Ingress
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.ingressClassName | quote }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.ingressClassName | quote }}  # Ingress class annotation
 spec:
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.ingress.host }}                # Hostname associated with the Ingress
       http:
         paths:
-          - path: {{ .Values.ingress.path }}
+          - path: {{ .Values.ingress.path }}          # Path to match in the Ingress
             pathType: Prefix
             backend:
-              serviceName: {{ .Values.service.name }}
-              servicePort: {{ .Values.service.ports.port }}
+              serviceName: {{ .Values.service.name }}          # Service to route traffic to
+              servicePort: {{ .Values.service.ports.port }}    # Service port to use
