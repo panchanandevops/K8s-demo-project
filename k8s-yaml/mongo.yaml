@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-deployment
+  name: mongodb-deployment # Unique identifier for the Deployment
   namespace: default
   labels:
-    app: mongodb
+    app: mongodb # Label to identify resources related to this Deployment
 spec:
-  replicas: 1
+  replicas: 1 # Number of replica pods to maintain
   selector:
     matchLabels:
-      app: mongodb
+      app: mongodb # Selector label for the pods
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mongodb # Label for pods created by this Deployment
     spec:
       containers:
         - name: mongodb
-          image: mongo
+          image: mongo # Container image to use
           ports:
-            - containerPort: 27017
+            - containerPort: 27017 # Port to expose on the container
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: mongo-root-username
+                  key: mongo-root-username # Secret key for admin username
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: mongo-root-password
+                  key: mongo-root-password # Secret key for admin password
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: mongodb-service # Unique identifier for the Service
 spec:
   selector:
-    app: mongodb
+    app: mongodb # Selector label for pods to expose
   ports:
     - protocol: TCP
-      port: 27017
-      targetPort: 27017
+      port: 27017 # Service port
+      targetPort: 27017 # Target port on pods
