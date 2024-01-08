@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - mongodb-service.yml
+  - mongodb-deployment.yml
+  - mongo-express-service.yml
+  - mongo-express-deployment.yml
+  - ingress.yml
+
+commonLabels:
+  app: my-app

@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+# Apply common labels to all resources
+commonLabels:
+  environment: production
+  app: my-app # This is an example; adjust as needed
+
+# Set replica count to 5 for all deployments
+replicas:
+  - name: mongodb-deployment.yml
+    count: 5
+  - name: mongo-express-deployment.yml
+    count: 5
+
+# Set namespace to "production"
+namespace: production
+
+# Create ConfigMapGenerator for mongodb-configmap
+configMapGenerator:
+  - name: mongodb-configmap
+    files:
+      - configmap.properties # Include the path relative to the kustomization.yaml
+
+# Create SecretGenerator for mongodb-secret
+secretGenerator:
+  - name: mongodb-secret
+    files:
+      - secret-file.txt # Include the path relative to the kustomization.yaml
