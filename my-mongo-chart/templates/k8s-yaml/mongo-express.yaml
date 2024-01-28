@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mongo-express.Deployment.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.mongo-express.labels }} # Label to identify resources related to this Deployment
+spec:
+  replicas: {{ .Values.mongo-express.replicas }} # Number of replica pods to maintain
+  selector:
+    matchLabels:
+      app: {{ .Values.mongo-express.labels }} # Selector label for the pods
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mongo-express.labels }} # Label for pods created by this Deployment
+    spec:
+      containers:
+        - name: {{ .Values.mongo-express.Container.name }}
+          image: {{ .Values.mongo-express.Container.image }} # Container image to use
+          ports:
+            - containerPort: 8081 # Port to expose on the container
+          env:
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.name }}
+                  key: mongo-root-username # Secret key for admin username
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.name }}
+                  key: mongo-root-password # Secret key for admin password
+            - name: ME_CONFIG_MONGODB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.ConfigMap.name }}
+                  key: database_url # ConfigMap key for the database URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mongo-express.Service.name }}  # Unique identifier for the Service
+spec:
+  selector:
+    app: {{ .Values.mongo-express.labels }} # Selector label for pods to expose
+  type: {{ .Values.mongo-express.Service.type }} # Type of service
+  ports:
+    - protocol: TCP
+      port: {{ .Values.mongo-express.Service.port }} # Service port
+      targetPort: 8081 # Target port on pods
+      nodePort: {{ .Values.mongo-express.Service.nodePort }} # Node port (for LoadBalancer type)

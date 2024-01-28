@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: name # Unique identifier for the Ingress resource
+  name: {{ .Values.Ingress.name }} # Unique identifier for the Ingress resource
   annotations:
     kubernetes.io/ingress.class: "nginx" # Ingress controller class
 spec:
   rules:
-    - host: devops.com # Hostname associated with this Ingress
+    - host: {{ .Values.Ingress.host }} # Hostname associated with this Ingress
       http:
         paths:
           - path: / # Path-based routing
             backend:
-              serviceName: my-service # Service to forward traffic to
+              serviceName: {{ .Values.mongo-express.Service.name }} # Service to forward traffic to
               servicePort: 8081 # Service port to use

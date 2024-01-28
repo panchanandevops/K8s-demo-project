@@ -1,0 +1,42 @@
+Ingress:
+  name: my-ingress
+  host: devops.com
+
+ConfigMap:
+  name: mongodb-configmap
+  data:
+    database_url: mongodb-service
+
+mongo-express:
+  Deployment:
+    name: mongo-express-deployment
+  Container:
+    name: mongo-express-container
+    image: mongo-express
+  Service:
+    name: mongo-express-service
+    type: LoadBalancer
+    port: 8081
+    nodePort: 30000
+  labels: mongo-express
+  replicas: 1
+
+namespace: default
+
+Secret:
+  name: mongodb-secret
+  type: Opaque
+  data:
+    mongo-root-username: dXNlcm5hbWU=
+    mongo-root-password: cGFzc3dvcmQ=
+
+mongodb:
+  Deployment:
+    name: mongodb-deployment
+  Container:
+    name: mongodb
+    image: mongo
+  Service:
+    name: mongodb-service
+    port: 27017
+  labels: mongodb

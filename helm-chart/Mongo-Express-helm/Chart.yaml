@@ -1,4 +1,0 @@
-apiVersion: v2
-name: mongoexpress # Unique identifier for the Helm Chart
-description: A Helm chart for Mongo Express # Brief description of the Helm Chart
-version: 0.1.0 # Version number of the Helm Chart

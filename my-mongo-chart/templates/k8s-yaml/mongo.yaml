@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mongodb.Deployment.name }} # Unique identifier for the Deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.mongodb.labels }} # Label to identify resources related to this Deployment
+spec:
+  replicas: 1 # Number of replica pods to maintain
+  selector:
+    matchLabels:
+      app: {{ .Values.mongodb.labels }} # Selector label for the pods
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mongodb.labels }} # Label for pods created by this Deployment
+    spec:
+      containers:
+        - name: {{ .Values.mongodb.Container.name }}
+          image: {{ .Values.mongodb.image }} # Container image to use
+          ports:
+            - containerPort: 27017 # Port to expose on the container
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.name }}
+                  key: mongo-root-username # Secret key for admin username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.Secret.name }}
+                  key: mongo-root-password # Secret key for admin password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mongodb.Service.name }} # Unique identifier for the Service
+spec:
+  selector:
+    app: {{ .Values.mongodb.labels }} # Selector label for pods to expose
+  ports:
+    - protocol: TCP
+      port: {{ .Values.mongodb.Service.port }} # Service port
+      targetPort: 27017 # Target port on pods
