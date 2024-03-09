@@ -44,20 +44,16 @@ For detailed usage instructions and additional information, refer to the README 
 ### Helm Charts 📈
 To deploy the Helm charts in the **prod namespace**, execute the following commands:
 
-1. Install MongoDB Helm chart:
+- Install MongoDB Helm chart:
 
 ```bash
-helm install mongo-release helm-chart/MongoDB-helm --namespace prod
-```
-
-2. Install Mongo Express Helm chart:
-
-```bash
-helm install mongo-express-release helm-chart/Mongo-Express-helm --namespace prod
+helm install my-mongo-app my-mongo-chart --namespace prod
 ```
 
 
-Navigate to the [Helm Chart README](helm-chart/README.md) in the `helm-chart` directory for comprehensive guidance on deploying MongoDB and Mongo Express using Helm charts.
+
+
+Navigate to the [my-mongo-chart](./my-mongo-chart/)  directory for comprehensive guidance on deploying MongoDB and Mongo Express using Helm charts.
 
 ### Kustomization 🛠️
 
@@ -66,7 +62,7 @@ Deploy MongoDB and Mongo Express using kustomization:
 ```bash
 kubectl apply -k kustomize/overlays/production
 ```
-Explore the [Kustomize README](kustomize/README.md) in the `kustomize` directory for details on customization and deployment using Kustomize.
+Explore the [Kustomize ](kustomize/)  directory for details on customization and deployment using Kustomize.
 
 ### Plain YML Code
 
